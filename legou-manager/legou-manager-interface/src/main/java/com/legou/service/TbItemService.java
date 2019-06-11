@@ -1,9 +1,19 @@
 package com.legou.service;
 
+import java.util.Map;
+
 import com.legou.common.pojo.EasyUIDataGridResult;
+import com.legou.common.utils.LegouResult;
 import com.legou.pojo.TbItem;
+import com.legou.pojo.TbItemDesc;
 
 public interface TbItemService {
-	TbItem getTbItemById(Long id);
+	Map<String ,Object> getTbItemById(Long id);
 	EasyUIDataGridResult getDataGridResult(int page,int rows);
+	LegouResult addItemAndDesc(TbItem tbItem, String desc);
+	LegouResult deleteItemAndDesc(long ids);
+	LegouResult instock(long ids);
+	LegouResult reshelf(long ids);
+	LegouResult updateItemAndDesc(Map<String, Object> map);
+	LegouResult getDesc(long id);
 }
