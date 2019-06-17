@@ -6,4 +6,6 @@ import com.legou.common.pojo.SearchItem;
 
 public interface SearchItemMapper {
 	List<SearchItem> getItemsList();
+
+	SearchItem getItemById(Long id);
 }

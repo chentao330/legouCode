@@ -5,7 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -26,6 +35,12 @@ public class TbItemServiceImpl implements TbItemService{
 	private TbItemMapper tbItemMapper;
 	@Autowired
 	private TbItemDescMapper tbItemDescMapper;
+	
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	@Resource
+	private Destination topicDestination;
+	
 	@Override
 	public Map<String ,Object> getTbItemById(Long id) {
 
@@ -59,7 +74,7 @@ public class TbItemServiceImpl implements TbItemService{
 	@Override
 	public LegouResult addItemAndDesc(TbItem tbItem, String desc) {
 		//创建一个ID编号，编号为时间轴
-		long genItemId = IDUtils.genItemId();
+		final long genItemId = IDUtils.genItemId();
 
 		//给TBItem设置值
 		tbItem.setId(genItemId);
@@ -76,7 +91,17 @@ public class TbItemServiceImpl implements TbItemService{
 		tbItemDesc.setCreated(new Date());
 		tbItemDesc.setUpdated(new Date());
 		tbItemDescMapper.insert(tbItemDesc);
-
+		
+		//发送消息
+		jmsTemplate.send(topicDestination, new MessageCreator() {
+			
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				TextMessage textMessage = session.createTextMessage(genItemId+"");
+				
+				return textMessage;
+			}
+		});		
 		return LegouResult.ok();
 	}
 
@@ -141,6 +166,20 @@ public class TbItemServiceImpl implements TbItemService{
 		TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(id);
 		
 		return LegouResult.ok(tbItemDesc);
+	}
+
+	
+	//获取tbItem的信息
+	@Override
+	public TbItem geTbItem(long id) {
+		TbItem tbItem = tbItemMapper.selectByPrimaryKey(id);
+		return tbItem;
+	}
+	//获取tbItemDesc的信息
+	@Override
+	public TbItemDesc geTbItemDesc(long itemid) {
+		TbItemDesc itemDesc = tbItemDescMapper.selectByPrimaryKey(itemid);
+		return itemDesc;
 	}
 
 }

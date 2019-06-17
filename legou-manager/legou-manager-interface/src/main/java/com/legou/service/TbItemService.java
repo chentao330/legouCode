@@ -16,4 +16,10 @@ public interface TbItemService {
 	LegouResult reshelf(long ids);
 	LegouResult updateItemAndDesc(Map<String, Object> map);
 	LegouResult getDesc(long id);
+	
+	//详情页需获取tbItem数据和desc的内容
+	TbItem geTbItem(long id);
+	TbItemDesc geTbItemDesc(long itemid);
+	
+	
 }

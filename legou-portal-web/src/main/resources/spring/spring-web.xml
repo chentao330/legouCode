@@ -25,10 +25,11 @@
 	<mvc:resources location="/js/" mapping="/js/**"/>
 	
 	<!-- 引用dubbo服务 -->
-	<!-- <dubbo:application name="legou-manager-web"/>
+	<dubbo:application name="legou-manager-web"/>
 	
 	<dubbo:registry protocol="zookeeper" address="192.168.25.128:2181"/>
 		
-	<dubbo:reference interface="com.legou.service.TbItemService" id="tbItemService" />
-	<dubbo:reference interface="com.legou.service.TbItemCatService" id="tbItemCatService" /> -->
+	<dubbo:reference interface="com.legou.content.service.ContentService" id="contentService" />
+	
+	<!--<dubbo:reference interface="com.legou.service.TbItemCatService" id="tbItemCatService" /> -->
 </beans>

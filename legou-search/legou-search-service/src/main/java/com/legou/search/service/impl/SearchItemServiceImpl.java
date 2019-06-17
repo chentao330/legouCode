@@ -16,6 +16,8 @@ public class SearchItemServiceImpl implements SearchItemService {
 
 	@Autowired
 	private SearchItemMapper searchItemMapper;
+	
+	
 	@Autowired
 	private SolrServer SolrServer;
 	@Override
@@ -48,5 +50,4 @@ public class SearchItemServiceImpl implements SearchItemService {
 		
 
 	}
-
 }

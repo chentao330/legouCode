@@ -14,6 +14,7 @@ import com.legou.content.service.ContentService;
 import com.legou.mapper.TbContentMapper;
 import com.legou.pojo.TbContent;
 import com.legou.pojo.TbContentExample;
+import com.legou.pojo.TbContentExample.Criteria;
 @Service
 public class ContentServiceImpl implements ContentService {
 	@Autowired
@@ -62,6 +63,16 @@ public class ContentServiceImpl implements ContentService {
 	public LegouResult deleteContent(long ids) {
 		tbContentMapper.deleteByPrimaryKey(ids);
 		return LegouResult.ok();
+	}
+	@Override
+	public List<TbContent> getDGGList(long cid) {
+		
+		TbContentExample example=new TbContentExample();
+		Criteria criteria = example.createCriteria();
+		//创建查询条件
+		criteria.andCategoryIdEqualTo(cid);
+		List<TbContent> list = tbContentMapper.selectByExample(example);
+		return list;
 	}
 	
 }

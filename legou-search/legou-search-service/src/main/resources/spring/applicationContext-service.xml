@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 配置包扫描器 -->
-	<context:component-scan base-package="com.legou.search.service"/>
+	<context:component-scan base-package="com.legou.search"/>
 	
 	<!-- 暴露服务dubbo -->
 
@@ -24,4 +24,5 @@
 	
 	<!-- 声明需要暴露的服务接口 -->
 	<dubbo:service interface="com.legou.search.service.SearchItemService" ref="searchItemServiceImpl" timeout="600000"/>
+	<dubbo:service interface="com.legou.search.service.SearchService" ref="searchServiceImpl" timeout="600000"/>
 </beans>

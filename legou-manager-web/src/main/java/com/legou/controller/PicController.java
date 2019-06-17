@@ -18,13 +18,14 @@ import com.legou.common.utils.JsonUtils;
 @Controller
 public class PicController {
 	@Value("${IMAGE_SERVER_URL}")
-	private String IMAGE_SERVER_URL;
+	private String IMAGE_SERVER_URL;//IMAGE_SERVER_URL==图片服务器的地址：http://192.168.25.133/
 	
 	@RequestMapping("/pic/upload")
 	@ResponseBody
 	public String fileUpload(MultipartFile uploadFile,HttpServletRequest request ){
 		FastDFSClient fastDFSClient;
 		try {
+			//client.conf：图片服务器的track地址：192.168.25.133:22122
 			fastDFSClient = new FastDFSClient("classpath:conf/client.conf");
 			//图片名
 			String name=uploadFile.getOriginalFilename();
