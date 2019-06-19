@@ -173,4 +173,5 @@ public class TbOrder  implements Serializable {
     public void setBuyerRate(Integer buyerRate) {
         this.buyerRate = buyerRate;
     }
+
 }

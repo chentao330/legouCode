@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.legou.cart.service.CartService;
 import com.legou.common.jedis.JedisClient;
+import com.legou.common.utils.CookieUtils;
 import com.legou.common.utils.JsonUtils;
 import com.legou.common.utils.LegouResult;
 import com.legou.mapper.TbItemMapper;
@@ -84,6 +85,7 @@ public class CartServiceImpl implements CartService {
 		
 		return tbItems;
 	}
+	
 	@Override
 	public LegouResult updateCartItem(Long userId, long itemId, Integer num) {
 		//获取redis里的数据
@@ -95,6 +97,13 @@ public class CartServiceImpl implements CartService {
 		
 		//设置好后在把数据存入redis
 		jedisClient.hset("cart:"+userId, itemId+"",JsonUtils.objectToJson(tbItem));
+		return LegouResult.ok();
+	}
+	//清空购物车列表
+	@Override
+	public LegouResult clearCartItem(Long userId) {
+		//清空redis列表
+		jedisClient.del("cart:"+userId);
 		return LegouResult.ok();
 	}
 

@@ -12,7 +12,9 @@ public interface CartService {
 
 	LegouResult mergeCartItem(Long userId, List<TbItem> cartList);
 
-	List<TbItem> getCart(Long id);
+	List<TbItem> getCart(Long userId);
 
-	LegouResult updateCartItem(Long id, long itemId, Integer num);
+	LegouResult updateCartItem(Long userId, long itemId, Integer num);
+
+	LegouResult clearCartItem(Long userId);
 }
